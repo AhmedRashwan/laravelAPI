@@ -8,11 +8,9 @@ Route::resource("meeting/registration", "RegistrationController", [
 ]);
 
 Route::group(["prefix" => 'user'], function () {
-    Route::post("/", function (\Illuminate\Http\Request $request) {
-        return $request;
-    });
-
-    Route::post("signin", "userController@signin");
+    Route::resource("/", "userController");
+//
+//    Route::post("signin", "userController@signin");
 });
 
 

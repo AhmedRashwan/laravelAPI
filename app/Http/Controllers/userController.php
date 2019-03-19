@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class userController extends Controller
@@ -34,7 +35,31 @@ class userController extends Controller
      */
     public function store(Request $request)
     {
-        return 'its work';
+        $this->validate($request,
+        ['name'=>'string',
+            'email'=>'unique:users',
+            'password'=>'max:10'
+            ]);
+
+        $user = new User();
+        $user->name =$request->input('name');
+        $user->email =$request->input('email');
+        $user->password =$request->input('password');
+        $user->title =$request->input('title');
+        if($user->save()){
+            $response = [
+                'message'=>'user added successfully',
+                'data'=>$user
+            ];
+            return response()->json($response,200);
+        }else{
+            $response = [
+                'message'=>'error while adding user',
+                'data'=>$user
+            ];
+            return response()->json($response,404);
+        }
+
     }
 
     /**
@@ -79,6 +104,19 @@ class userController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        if($user->delete()){
+            $response = [
+                'message'=>'user deleted successfully',
+                'data'=>$user
+            ];
+            return response()->json($response,200);
+        }else{
+            $response = [
+                'message'=>'error while deleting user',
+                'data'=>$user
+            ];
+            return response()->json($response,404);
+        }
     }
 }

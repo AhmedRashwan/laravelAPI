@@ -12,13 +12,11 @@ class CreateMeetingTable extends Migration
             $table->bigIncrements("id");
             $table->timestamps();
             $table->softDeletes();
-            $table->date('time');
             $table->string('title');
             $table->text('description');
             $table->integer('audits');
             $table->integer('auditsLimit');
         });
-
     }
 
     public function down()

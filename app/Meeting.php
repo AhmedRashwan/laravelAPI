@@ -11,7 +11,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use App\User;
 class Meeting extends Model
 {
 //    protected $keyType = 'string';//if your primary key not of type int
@@ -22,14 +22,18 @@ class Meeting extends Model
 //    protected $table = "myMeetings";//if your table not a snakeCase and have specified name
     use SoftDeletes;
 
-    protected $fillable= [''];
-    protected $attributes=[
-        'title'=> '',
-        'time'=> '1997-01-01',
-        'description'=> '',
-        'audits'=> 0,
-        'auditsLimit'=> 0,
+    protected $fillable = ['title','time','description','auditsLimit'];
+    protected $attributes = [
+        'title' => '',
+        'time' => '1997-01-01',
+        'description' => '',
+        'audits' => 0,
+        'auditsLimit' => 0,
 
     ];
 
+    public function users()
+    {
+        return $this->hasMany("App\User");
+    }
 }
